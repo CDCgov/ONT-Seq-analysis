@@ -37,26 +37,29 @@ for subdir in "$data_dir"/*; do
 done
 
 
-# Step 3: Create samplesheet.tsv
-samplesheet="samplesheet.tsv"
-echo -e "sample\tfastq_1" > "$samplesheet"
+# Step 3: Create samplesheet.csv
+samplesheet="samplesheet.csv"
+echo -e "sample,fastq_1,fastq_2" > "$samplesheet"
 
-# Extracting the base path to use later
 parent_path="${data_dir%/*}"
 
 # Loop through the output directory to create the samplesheet
 for subdir in "$output_dir"/*; do
     if [[ -d "$subdir" ]]; then
         subdir_name=$(basename "$subdir")
+        subdir_name_cl=$(basename "$subdir" | sed 's/-/_/g')
         merged_file="$parent_path/$subdir/${subdir_name}_merged.fastq.gz"
 
         # Append the subdirectory name and the path to the merged file to the TSV file
         if [[ -f "$merged_file" ]]; then
-            echo -e "$subdir_name\t$merged_file" >> "$samplesheet"
+            echo -e "$subdir_name_cl,$merged_file," >> "$samplesheet"
         else
             echo "Merged file not found for $subdir_name: $merged_file"
         fi
     fi
 done
+
+# Replace hyphens with underscores in only the first column (subdir_name)
+sed -i 's/^\([^,]*\)-/\1_/g; t; s/^\([^,]*\)-/\1_/g' "$samplesheet"
 
 echo "Samplesheet created: $samplesheet"
