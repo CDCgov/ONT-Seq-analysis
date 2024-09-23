@@ -49,6 +49,8 @@ include { INPUT_CHECK } from '../subworkflows/local/input_check'
 include { FASTQC                      } from '../modules/nf-core/fastqc/main'
 include { MULTIQC                     } from '../modules/nf-core/multiqc/main'
 include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoftwareversions/main'
+include { SEQTK_TRIM                  } from '../modules/nf-core/seqtk/trim/main'
+
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -70,9 +72,15 @@ workflow MPOXSEQANALYSIS {
         file(params.input)
     )
     ch_versions = ch_versions.mix(INPUT_CHECK.out.versions)
-    // TODO: OPTIONAL, you can use nf-validation plugin to create an input channel from the samplesheet with Channel.fromSamplesheet("input")
-    // See the documentation https://nextflow-io.github.io/nf-validation/samplesheets/fromSamplesheet/
-    // ! There is currently no tooling to help you write a sample sheet schema
+
+    //
+    // MODULE: Sequencing Toolkit (SEQTK) Trim
+    //
+    SEQTK_TRIM (
+       INPUT_CHECK.out.reads
+    )
+    ch_versions = ch_versions.mix(SEQTK_TRIM.out.versions)
+
 
     //
     // MODULE: Run FastQC
