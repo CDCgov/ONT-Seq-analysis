@@ -19,6 +19,11 @@
                             "modules"
                         ]
                     },
+                    "minimap2/index": {
+                        "branch": "master",
+                        "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
+                        "installed_by": ["modules"]
+                    },
                     "multiqc": {
                         "branch": "master",
                         "git_sha": "8ec825f465b9c17f9d83000022995b4f7de6fe93",
@@ -29,16 +34,24 @@
                     "seqtk/trim": {
                         "branch": "master",
                         "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
+<<<<<<< HEAD
                         "installed_by": [
                             "modules"
                         ]
+=======
+                        "installed_by": ["modules"]
+>>>>>>> my_branch
                     },
                     "trimmomatic": {
                         "branch": "master",
                         "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
+<<<<<<< HEAD
                         "installed_by": [
                             "modules"
                         ]
+=======
+                        "installed_by": ["modules"]
+>>>>>>> my_branch
                     }
                 }
             }

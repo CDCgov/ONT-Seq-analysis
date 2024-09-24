@@ -50,7 +50,12 @@ include { FASTQC                      } from '../modules/nf-core/fastqc/main'
 include { MULTIQC                     } from '../modules/nf-core/multiqc/main'
 include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoftwareversions/main'
 include { SEQTK_TRIM                  } from '../modules/nf-core/seqtk/trim/main'
+<<<<<<< HEAD
 include { TRIMMOMATIC                  } from '../modules/nf-core/trimmomatic/main'
+=======
+include { TRIMMOMATIC                 } from '../modules/nf-core/trimmomatic/main'
+include { MINIMAP2_INDEX              } from '../modules/nf-core/minimap2/index/main'
+>>>>>>> my_branch
 
 
 /*
@@ -75,7 +80,7 @@ workflow MPOXSEQANALYSIS {
     ch_versions = ch_versions.mix(INPUT_CHECK.out.versions)
 
     //
-    // MODULE: Sequencing Toolkit (SEQTK) Trim
+    // MODULE: Sequencing Toolkit (SEQTK) Trim & Trimmomatic
     //
     SEQTK_TRIM (
        INPUT_CHECK.out.reads
@@ -84,6 +89,7 @@ workflow MPOXSEQANALYSIS {
     ch_trimemd_seq_se  = SEQTK_TRIM.out.reads
     ch_versions = ch_versions.mix(SEQTK_TRIM.out.versions)
 
+<<<<<<< HEAD
     //
     // MODULE: TRIMMOMATIC
     //
@@ -92,6 +98,23 @@ workflow MPOXSEQANALYSIS {
        ch_trimemd_seq_se
     )
     ch_versions = ch_versions.mix(TRIMMOMATIC.out.versions)
+=======
+    TRIMMOMATIC (
+       SEQTK_TRIM.out.reads
+    )
+    ch_versions = ch_versions.mix(TRIMMOMATIC.out.versions)
+
+
+    //
+    // MODULE: Run FastQC
+    //
+
+    //MINIMAP2_INDEX (
+     //   params.fasta
+    //)
+
+    //ch_versions = ch_versions.mix(MINIMAP2_INDEX.out.versions.first())
+>>>>>>> my_branch
 
     //
     // MODULE: Run FastQC
