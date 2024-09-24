@@ -50,6 +50,7 @@ include { FASTQC                      } from '../modules/nf-core/fastqc/main'
 include { MULTIQC                     } from '../modules/nf-core/multiqc/main'
 include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoftwareversions/main'
 include { SEQTK_TRIM                  } from '../modules/nf-core/seqtk/trim/main'
+include { TRIMMOMATIC                 } from '../modules/nf-core/trimmomatic/main'
 
 
 /*
@@ -74,12 +75,17 @@ workflow MPOXSEQANALYSIS {
     ch_versions = ch_versions.mix(INPUT_CHECK.out.versions)
 
     //
-    // MODULE: Sequencing Toolkit (SEQTK) Trim
+    // MODULE: Sequencing Toolkit (SEQTK) Trim & Trimmomatic
     //
     SEQTK_TRIM (
        INPUT_CHECK.out.reads
     )
     ch_versions = ch_versions.mix(SEQTK_TRIM.out.versions)
+
+    TRIMMOMATIC (
+       SEQTK_TRIM.out.reads
+    )
+    ch_versions = ch_versions.mix(TRIMMOMATIC.out.versions)
 
 
     //
