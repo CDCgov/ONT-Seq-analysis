@@ -51,6 +51,7 @@ include { MULTIQC                     } from '../modules/nf-core/multiqc/main'
 include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoftwareversions/main'
 include { SEQTK_TRIM                  } from '../modules/nf-core/seqtk/trim/main'
 include { TRIMMOMATIC                 } from '../modules/nf-core/trimmomatic/main'
+include { MINIMAP2_INDEX              } from '../modules/nf-core/minimap2/index/main'
 
 
 /*
@@ -87,6 +88,16 @@ workflow MPOXSEQANALYSIS {
     )
     ch_versions = ch_versions.mix(TRIMMOMATIC.out.versions)
 
+
+    //
+    // MODULE: Run FastQC
+    //
+
+    //MINIMAP2_INDEX (
+     //   params.fasta
+    //)
+
+    //ch_versions = ch_versions.mix(MINIMAP2_INDEX.out.versions.first())
 
     //
     // MODULE: Run FastQC

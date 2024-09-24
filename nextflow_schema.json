@@ -5,6 +5,19 @@
     "description": "NF-CORE build for reference-based sequencing analysis of Mpox data obained with ONT sequencing",
     "type": "object",
     "definitions": {
+        "reference_genome_options": {
+            "title": "Reference genome options",
+            "type": "object",
+            "description": "Reference genome options",
+            "default": "",
+            "properties": {
+                "fasta": {
+                    "type": "string",
+                    "description": "Reference FASTA file",
+                    "hidden": true
+                }
+            }
+        },
         "input_output_options": {
             "title": "Input/output options",
             "type": "object",
@@ -211,6 +224,9 @@
         }
     },
     "allOf": [
+        {
+            "$ref": "#/definitions/reference_genome_options"
+        },
         {
             "$ref": "#/definitions/input_output_options"
         },
