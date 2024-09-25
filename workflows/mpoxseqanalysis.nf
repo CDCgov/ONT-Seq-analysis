@@ -95,6 +95,14 @@ workflow MPOXSEQANALYSIS {
     ch_versions = ch_versions.mix(TRIMMOMATIC.out.versions)
 
     //
+    // Module: Minimap2 (index & align)
+    //
+
+    MINIMAP2_INDEX(
+        [ [], params.fasta ]
+    )
+
+    //
     // MODULE: Run FastQC
     //
     FASTQC (
