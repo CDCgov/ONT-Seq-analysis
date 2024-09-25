@@ -1,6 +1,6 @@
 ## Introduction
 
-**ONT/mpoxseqanalysis** is a bioinformatics pipeline that [will be added soon]...
+**ONT/mpoxseqanalysis** is a bioinformatics pipeline that [in progress]...
 
 <!-- TODO nf-core:
    Complete this sentence with a 2-3 sentence summary of what types of data the pipeline ingests, a brief overview of the
@@ -37,7 +37,7 @@ Each row represents a fastq file (single-end) or a pair of fastq files (paired e
 
 -->
 
-First, prepare a samplesheet with your input data that looks as follows:
+First, prepare a samplesheet with your input data that looks as follows*:
 
 `samplesheet.csv`:
 
@@ -47,6 +47,7 @@ CONTROL_REP1,AEG588A1_S1_L002_R1_001.fastq.gz,
 ```
 A script is provided to convert a directory of fastq files into the required input sheet. Script can be found on `/assets/ont_fastq_concat_and_samplesheet_create.sh`
 
+*Using single end (SE) data for building this workflow
 
 Now, you can run the pipeline using:
 
