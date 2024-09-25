@@ -52,6 +52,9 @@ include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoft
 include { SEQTK_TRIM                  } from '../modules/nf-core/seqtk/trim/main'
 include { TRIMMOMATIC                 } from '../modules/nf-core/trimmomatic/main'
 include { MINIMAP2_INDEX              } from '../modules/nf-core/minimap2/index/main'
+include { MINIMAP2_ALIGN              } from '../modules/nf-core/minimap2/align/main'
+include { SAMTOOLS_INDEX              } from '../modules/nf-core/samtools/index/main'
+include { SAMTOOLS_SORT               } from '../modules/nf-core/samtools/sort/main'
 
 
 /*
@@ -101,6 +104,33 @@ workflow MPOXSEQANALYSIS {
     MINIMAP2_INDEX(
         [ [], params.fasta ]
     )
+
+    ch_versions = ch_versions.mix(MINIMAP2_INDEX.out.versions)
+
+    MINIMAP2_ALIGN (
+        TRIMMOMATIC.out.trimmed_reads,
+        MINIMAP2_INDEX.out.index,
+        true, true, false, false
+    )
+
+    ch_minimap2_mapped = MINIMAP2_ALIGN.out.bam
+    ch_versions = ch_versions.mix(MINIMAP2_ALIGN.out.versions)
+
+    //
+    // MODULE: Samtools
+    //
+
+    SAMTOOLS_SORT(
+        ch_minimap2_mapped,
+        [ [], params.fasta ]
+    )
+
+    SAMTOOLS_INDEX(
+        SAMTOOLS_SORT.out.bam
+    )
+
+    ch_versions = ch_versions.mix(SAMTOOLS_SORT.out.versions)
+    ch_versions = ch_versions.mix(SAMTOOLS_INDEX.out.versions)
 
     //
     // MODULE: Run FastQC
