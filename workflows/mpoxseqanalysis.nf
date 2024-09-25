@@ -55,6 +55,8 @@ include { MINIMAP2_INDEX              } from '../modules/nf-core/minimap2/index/
 include { MINIMAP2_ALIGN              } from '../modules/nf-core/minimap2/align/main'
 include { SAMTOOLS_INDEX              } from '../modules/nf-core/samtools/index/main'
 include { SAMTOOLS_SORT               } from '../modules/nf-core/samtools/sort/main'
+include { SAMTOOLS_DEPTH              } from '../modules/nf-core/samtools/depth/main'
+include { SAMTOOLS_VIEW               } from '../modules/nf-core/samtools/view/main'
 
 
 /*
