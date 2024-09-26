@@ -57,6 +57,8 @@ include { SAMTOOLS_INDEX              } from '../modules/nf-core/samtools/index/
 include { SAMTOOLS_SORT               } from '../modules/nf-core/samtools/sort/main'
 include { SAMTOOLS_DEPTH              } from '../modules/nf-core/samtools/depth/main'
 include { SAMTOOLS_VIEW               } from '../modules/nf-core/samtools/view/main'
+include { IVAR_CONSENSUS              } from '../modules/nf-core/ivar/consensus/main'
+
 
 
 /*
@@ -131,9 +133,28 @@ workflow MPOXSEQANALYSIS {
         SAMTOOLS_SORT.out.bam
     )
 
+    SAMTOOLS_DEPTH(
+        SAMTOOLS_SORT.out.bam,
+        [[], []]
+    )
+
     ch_versions = ch_versions.mix(SAMTOOLS_SORT.out.versions)
     ch_versions = ch_versions.mix(SAMTOOLS_INDEX.out.versions)
+    ch_versions = ch_versions.mix(SAMTOOLS_DEPTH.out.versions.first())
 
+    //
+    // MODULE: Ivar consensus
+    //
+
+    IVAR_CONSENSUS(
+        SAMTOOLS_SORT.out.bam,
+        [ params.fasta ],
+        false
+    )
+    
+    ch_versions = ch_versions.mix(IVAR_CONSENSUS.out.versions.first())
+    
+    
     //
     // MODULE: Run FastQC
     //
