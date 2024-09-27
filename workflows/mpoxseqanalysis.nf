@@ -59,8 +59,6 @@ include { SAMTOOLS_DEPTH              } from '../modules/nf-core/samtools/depth/
 include { SAMTOOLS_VIEW               } from '../modules/nf-core/samtools/view/main'
 include { IVAR_CONSENSUS              } from '../modules/nf-core/ivar/consensus/main'
 
-
-
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     RUN MAIN WORKFLOW
@@ -99,14 +97,30 @@ workflow MPOXSEQANALYSIS {
     TRIMMOMATIC (
        ch_trimemd_seq_se
     )
+    ch_trimmomatic  = TRIMMOMATIC.out.trimmed_reads
     ch_versions = ch_versions.mix(TRIMMOMATIC.out.versions)
+    
+
+
+     Channel
+        .fromPath(params.fasta) // Reference file provided via --fasta
+        .set { fasta_alone_ch }
+        
+    Channel
+        .fromPath(params.fasta) // Channel for reference_seq
+        .map { reference_seq ->
+            def meta = [:] // Empty meta, or you could use null if needed
+            tuple(meta, reference_seq) // Add empty meta to the tuple for the reference_seq channel
+        }
+        .set { fasta_ch }
 
     //
     // Module: Minimap2 (index & align)
     //
 
     MINIMAP2_INDEX(
-        [ [], params.fasta ]
+        fasta_ch 
+        // alternative: [ [], params.fasta ]
     )
 
     ch_versions = ch_versions.mix(MINIMAP2_INDEX.out.versions)
@@ -126,7 +140,7 @@ workflow MPOXSEQANALYSIS {
 
     SAMTOOLS_SORT(
         ch_minimap2_mapped,
-        [ [], params.fasta ]
+        fasta_ch
     )
 
     SAMTOOLS_INDEX(
@@ -143,7 +157,7 @@ workflow MPOXSEQANALYSIS {
     ch_versions = ch_versions.mix(SAMTOOLS_DEPTH.out.versions.first())
 
     //
-    // MODULE: Ivar consensus
+    // MODULE: Ivar consensus % Polish with Medaka
     //
 
     IVAR_CONSENSUS(
@@ -151,9 +165,19 @@ workflow MPOXSEQANALYSIS {
         [ params.fasta ],
         false
     )
-    
+
     ch_versions = ch_versions.mix(IVAR_CONSENSUS.out.versions.first())
     
+    ch_ivar_consensus = IVAR_CONSENSUS.out.fasta
+    .map { meta, file -> file } // Access the second element which is the path(".fa") from ivar
+
+
+
+    println "ch_ivar_consensus: ${ch_ivar_consensus == null ? 'null' : 'valid'}"
+    println "DEBUG: Type of ch_ivar_consensus: ${ch_ivar_consensus.getClass()}"
+    ch_ivar_consensus.view()  // Print contents of medaka_input
+
+
     
     //
     // MODULE: Run FastQC
