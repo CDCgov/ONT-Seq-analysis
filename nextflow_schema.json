@@ -15,6 +15,10 @@
                     "type": "string",
                     "description": "Reference FASTA file",
                     "hidden": true
+                },
+                "bed_file": {
+                    "type": "string",
+                    "description": "BED file for reference FASTA"
                 }
             }
         },
