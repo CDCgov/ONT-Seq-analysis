@@ -19,6 +19,18 @@
                 "bed_file": {
                     "type": "string",
                     "description": "BED file for reference FASTA"
+                },
+                "fai_file": {
+                    "type": "string",
+                    "description": "Index file for a FASTA sequence file"
+                },
+                "gff_file": {
+                    "type": "string",
+                    "description": "Tab-delimited format used to describe the locations and types of genomic features"
+                },
+                "mmi_file": {
+                    "type": "string",
+                    "description": "index file used by minimap2 to accelerate the alignment of long DNA or RNA sequences against a reference genome"
                 }
             }
         },

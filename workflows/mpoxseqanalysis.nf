@@ -60,7 +60,8 @@ include { SAMTOOLS_DEPTH              } from '../modules/nf-core/samtools/depth/
 include { SAMTOOLS_VIEW               } from '../modules/nf-core/samtools/view/main'
 include { IVAR_CONSENSUS              } from '../modules/nf-core/ivar/consensus/main'
 include { BEDOPS_CONVERT2BED          } from '../modules/nf-core/bedops/convert2bed/main'
-include { SAMTOOLS_FAIDX } from '../modules/nf-core/samtools/faidx/main'
+include { SAMTOOLS_FAIDX              } from '../modules/nf-core/samtools/faidx/main'
+include { IVAR_VARIANTS               } from '../modules/nf-core/ivar/variants/main'
 
 //
 // MODULE: Installed locally mirrored after nf-core/modules
@@ -112,7 +113,7 @@ workflow MPOXSEQANALYSIS {
     
 
 
-     Channel
+ /*   Channel
         .fromPath(params.fasta) // Reference file provided via --fasta
         .set { fasta_alone_ch }
         
@@ -123,58 +124,70 @@ workflow MPOXSEQANALYSIS {
             tuple(meta, reference_seq) // Add empty meta to the tuple for the reference_seq channel
         }
         .set { fasta_ch }
-
+*/
     Channel
-        .fromPath(params.bed_file) // Channel for reference_seq
-        .map { bed_file_file ->
-            def meta = [:] // Empty meta, or you could use null if needed
-            tuple(meta, bed_file_file) // Add empty meta to the tuple for the reference_seq channel
+        .fromPath(params.fasta) // Channel for reference_seq
+        .map { reference_seq ->
+            def meta = [:] // Create an empty map for meta
+            meta.file_name = reference_seq.getBaseName() // Extract the file name and add it to meta
+            tuple(meta, reference_seq) // Add meta (with file name) and reference_seq to the tuple
         }
-        .set { bed_ch }
+        .set { fasta_ch }
+    //fasta_ch.view()
 
     //
     // Module: Minimap2 (index & align)
     //
 
-    MINIMAP2_INDEX(
-        fasta_ch 
+    //MINIMAP2_INDEX(
+    //    fasta_ch 
         // alternative: [ [], params.fasta ]
-    )
+    //)
 
-    SAMTOOLS_FAIDX (
-        fasta_ch,
-        MINIMAP2_INDEX.out.index
-    )
+    //SAMTOOLS_FAIDX (
+    //    fasta_ch,
+    //    [ [], params.mmi_file ] //MINIMAP2_INDEX.out.index
+    //)
 
-    ch_versions = ch_versions.mix(MINIMAP2_INDEX.out.versions)
-    ch_versions = ch_versions.mix(SAMTOOLS_FAIDX.out.versions)
+    //ch_versions = ch_versions.mix(MINIMAP2_INDEX.out.versions)
+    //ch_versions = ch_versions.mix(SAMTOOLS_FAIDX.out.versions)
 
     MINIMAP2_ALIGN (
         TRIMMOMATIC.out.trimmed_reads,
-        MINIMAP2_INDEX.out.index,
+        [ [], params.mmi_file ], //MINIMAP2_INDEX.out.index,
         true, true, false, false
     )
 
     ch_minimap2_mapped = MINIMAP2_ALIGN.out.bam
+    //ch_minimap2_mapped.view()
     ch_versions = ch_versions.mix(MINIMAP2_ALIGN.out.versions)
+
+
+
+
 
     //
     // MODULE: Samtools
     //
 
     SAMTOOLS_SORT(
-        ch_minimap2_mapped,
-        fasta_ch
+        MINIMAP2_ALIGN.out.bam,
+        [ [], params.fasta ]
     )
+
+    
+
 
     SAMTOOLS_INDEX(
         SAMTOOLS_SORT.out.bam
     )
 
+
     SAMTOOLS_DEPTH(
         SAMTOOLS_SORT.out.bam,
         [[], []]
     )
+
 
     ch_versions = ch_versions.mix(SAMTOOLS_SORT.out.versions)
     ch_versions = ch_versions.mix(SAMTOOLS_INDEX.out.versions)
@@ -193,21 +206,15 @@ workflow MPOXSEQANALYSIS {
     ch_versions = ch_versions.mix(IVAR_CONSENSUS.out.versions.first())
     
     ch_ivar_consensus = IVAR_CONSENSUS.out.fasta
-    .map { meta, file -> file } // Access the second element which is the path(".fa") from ivar
+    //.map { meta, file -> file } // Access the second element which is the path(".fa") from ivar
+    
+    
 
-
-
-    //println "ch_ivar_consensus: ${ch_ivar_consensus == null ? 'null' : 'valid'}"
-    //println "DEBUG: Type of ch_ivar_consensus: ${ch_ivar_consensus.getClass()}"
-    //ch_ivar_consensus.view()  // Print contents of medaka_input
-    //IVAR_CONSENSUS.out.fasta.view()  // Print contents of medaka_input
-    //TRIMMOMATIC.out.trimmed_reads.view()  // Print contents of medaka_input
 
     //
     // MODULE: Medaka
     //
-
-    
+   
 
     MEDAKA (
         TRIMMOMATIC.out.trimmed_reads,
@@ -216,13 +223,24 @@ workflow MPOXSEQANALYSIS {
 
     ch_versions = ch_versions.mix(MEDAKA.out.versions.first())
 
-    //SAMTOOLS_INDEX.out.bai.view()
-    //SAMTOOLS_FAIDX.out.fa.view()
-    //println "ch_ivar_consensus: ${bed_ch == null ? 'null' : 'valid'}"
-    SAMTOOLS_FAIDX.out.fa.view()
+    println "MEDAKA.out.assembly: ${MEDAKA.out.assembly == null ? 'null' : 'valid'}"
+    println "DEBUG: Type of MEDAKA.out.assembly: ${MEDAKA.out.assembly.getClass()}"
+    MEDAKA.out.assembly.view()  // Print contents
 
 
+    //
+    // MODULE: IVAR_VARIANTS
+    //
 
+    IVAR_VARIANTS (
+        SAMTOOLS_SORT.out.bam,
+        params.fasta,
+        params.fai_file,
+        params.gff_file,
+        false
+    )
+    
+    //ch_versions = ch_versions.mix(IVAR_VARIANTS.out.versions.first())
 
     
     //
@@ -251,7 +269,7 @@ workflow MPOXSEQANALYSIS {
     ch_multiqc_files = ch_multiqc_files.mix(ch_methods_description.collectFile(name: 'methods_description_mqc.yaml'))
     ch_multiqc_files = ch_multiqc_files.mix(CUSTOM_DUMPSOFTWAREVERSIONS.out.mqc_yml.collect())
     ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip.collect{it[1]}.ifEmpty([]))
-    ch_multiqc_files = ch_multiqc_files.mix(SAMTOOLS_DEPTH.out.tsv.collect{it[1]}.ifEmpty([]))
+    //ch_multiqc_files = ch_multiqc_files.mix(SAMTOOLS_DEPTH.out.tsv.collect{it[1]}.ifEmpty([]))
     ch_multiqc_files = ch_multiqc_files.mix(ch_minimap2_mapped.collect{it[1]}.ifEmpty([]))
 
     MULTIQC (
