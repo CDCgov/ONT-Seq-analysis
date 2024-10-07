@@ -1,15 +1,13 @@
 #!/bin/bash
 
-
-Author: Luis A Haddock
-
-
-# Ask for the path to the data directory
+echo "Ensure you currently are in the wd you will save the merged files to. A directory will be created automatically to store all merged files."
+# Prompt the user for the path to the data directory
 read -p "Please enter the path to the data directory: " data_dir
 
 # Step 1: Create a 'data_output' folder in the current working directory
 output_dir="data_output"
 mkdir -p "$output_dir"
+current_dir=$(pwd)
 
 # Step 2: Loop through the 'data' directory to merge FASTQ files
 for subdir in "$data_dir"/*; do
@@ -32,27 +30,28 @@ for subdir in "$data_dir"/*; do
             zcat "$subdir"/*.fastq.gz | gzip >> "$output_file"
         fi
 
-        echo "Concatenated files in $subdir_name and saved as $output_file"
+        echo "Concatenated files from $subdir_name and saved as $output_file at $(date '+%Y-%m-%d %H:%M:%S')"
     fi
 done
 
 
 # Step 3: Create samplesheet.csv
 samplesheet="samplesheet.csv"
-echo -e "sample,fastq_1,fastq_2" > "$samplesheet"
+#echo "sample,fastq_1,fastq_2" > "$samplesheet"
+printf "sample,fastq_1,fastq_2\n" > "$samplesheet"
 
-parent_path="${data_dir%/*}"
+#parent_path="$current_dir" #/${output_dir%/*}"
 
 # Loop through the output directory to create the samplesheet
 for subdir in "$output_dir"/*; do
     if [[ -d "$subdir" ]]; then
         subdir_name=$(basename "$subdir")
         subdir_name_cl=$(basename "$subdir" | sed 's/-/_/g')
-        merged_file="$parent_path/$subdir/${subdir_name}_merged.fastq.gz"
+        merged_file="$current_dir/$subdir/${subdir_name}_merged.fastq.gz"
 
         # Append the subdirectory name and the path to the merged file to the TSV file
         if [[ -f "$merged_file" ]]; then
-            echo -e "$subdir_name_cl,$merged_file," >> "$samplesheet"
+            printf "%s,%s,\n" "$subdir_name_cl" "$merged_file" >> "$samplesheet"
         else
             echo "Merged file not found for $subdir_name: $merged_file"
         fi
@@ -62,4 +61,4 @@ done
 # Replace hyphens with underscores in only the first column (subdir_name)
 sed -i 's/^\([^,]*\)-/\1_/g; t; s/^\([^,]*\)-/\1_/g' "$samplesheet"
 
-echo "Samplesheet created: $samplesheet"
+echo "Samplesheet created: $samplesheet at $(date '+%Y-%m-%d %H:%M:%S')"

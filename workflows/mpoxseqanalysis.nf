@@ -62,6 +62,7 @@ include { IVAR_CONSENSUS              } from '../modules/nf-core/ivar/consensus/
 include { BEDOPS_CONVERT2BED          } from '../modules/nf-core/bedops/convert2bed/main'
 include { SAMTOOLS_FAIDX              } from '../modules/nf-core/samtools/faidx/main'
 include { IVAR_VARIANTS               } from '../modules/nf-core/ivar/variants/main'
+include { BCFTOOLS_INDEX              } from '../modules/nf-core/bcftools/index/main'
 
 //
 // MODULE: Installed locally mirrored after nf-core/modules
@@ -163,9 +164,6 @@ workflow MPOXSEQANALYSIS {
     ch_versions = ch_versions.mix(MINIMAP2_ALIGN.out.versions)
 
 
-
-
-
     //
     // MODULE: Samtools
     //
@@ -176,12 +174,9 @@ workflow MPOXSEQANALYSIS {
     )
 
     
-
-
     SAMTOOLS_INDEX(
         SAMTOOLS_SORT.out.bam
     )
-
 
     SAMTOOLS_DEPTH(
         SAMTOOLS_SORT.out.bam,
@@ -207,9 +202,6 @@ workflow MPOXSEQANALYSIS {
     
     ch_ivar_consensus = IVAR_CONSENSUS.out.fasta
     //.map { meta, file -> file } // Access the second element which is the path(".fa") from ivar
-    
-    
-
 
     //
     // MODULE: Medaka
@@ -228,8 +220,8 @@ workflow MPOXSEQANALYSIS {
     MEDAKA.out.assembly.view()  // Print contents
 
 
-    //
-    // MODULE: IVAR_VARIANTS
+    // 
+    // MODULE: IVAR_VARIANTS & BCFTOOLS_INDEX (for indexing VCF file)
     //
 
     IVAR_VARIANTS (
@@ -240,6 +232,9 @@ workflow MPOXSEQANALYSIS {
         false
     )
     
+    //BCFTOOLS_INDEX (
+     //   IVAR_VARIANTS.out.tsv
+    //)
     //ch_versions = ch_versions.mix(IVAR_VARIANTS.out.versions.first())
 
     
