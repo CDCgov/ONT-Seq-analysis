@@ -237,6 +237,22 @@
                     "help_text": "Allows string values that are parseable as numbers or booleans. For further information see [JSONSchema docs](https://github.com/everit-org/json-schema#lenient-mode)."
                 }
             }
+        },
+        "nextclade_parameters": {
+            "title": "Nextclade Parameters",
+            "type": "object",
+            "description": "Options for the workflow regarding nextclade in the pipeline",
+            "default": "",
+            "properties": {
+                "nextclade_dataset_name": {
+                    "type": "string",
+                    "description": "Name of Nextclade dataset to retrieve."
+                },
+                "nextclade_dataset_tag": {
+                    "type": "string",
+                    "description": "Version tag of the dataset to download."
+                }
+            }
         }
     },
     "allOf": [
@@ -254,6 +270,9 @@
         },
         {
             "$ref": "#/definitions/generic_options"
+        },
+        {
+            "$ref": "#/definitions/nextclade_parameters"
         }
     ]
 }

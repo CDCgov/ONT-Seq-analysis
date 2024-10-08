@@ -63,6 +63,8 @@ include { BEDOPS_CONVERT2BED          } from '../modules/nf-core/bedops/convert2
 include { SAMTOOLS_FAIDX              } from '../modules/nf-core/samtools/faidx/main'
 include { IVAR_VARIANTS               } from '../modules/nf-core/ivar/variants/main'
 include { BCFTOOLS_INDEX              } from '../modules/nf-core/bcftools/index/main'
+include { NEXTCLADE_DATASETGET        } from '../modules/nf-core/nextclade/datasetget/main'
+include { NEXTCLADE_RUN               } from '../modules/nf-core/nextclade/run/main'
 
 //
 // MODULE: Installed locally mirrored after nf-core/modules
@@ -231,6 +233,19 @@ workflow MPOXSEQANALYSIS {
         params.gff_file,
         false
     )
+
+    NEXTCLADE_DATASETGET (
+        params.nextclade_dataset_name,
+        []
+    )
+
+    NEXTCLADE_RUN (
+        MEDAKA.out.assembly,
+        NEXTCLADE_DATASETGET.out.dataset
+    )
+
+    ch_versions = ch_versions.mix(NEXTCLADE_DATASETGET.out.versions.first())
+    ch_versions = ch_versions.mix(NEXTCLADE_RUN.out.versions.first())
     
     //BCFTOOLS_INDEX (
      //   IVAR_VARIANTS.out.tsv
