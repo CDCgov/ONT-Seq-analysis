@@ -279,6 +279,7 @@ workflow MPOXSEQANALYSIS {
     ch_multiqc_files = ch_multiqc_files.mix(ch_methods_description.collectFile(name: 'methods_description_mqc.yaml'))
     ch_multiqc_files = ch_multiqc_files.mix(CUSTOM_DUMPSOFTWAREVERSIONS.out.mqc_yml.collect())
     ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip.collect{it[1]}.ifEmpty([]))
+    //ch_multiqc_files = .collectFile(name: 'nextclade_clade_mqc.tsv').ifEmpty([])
     //ch_multiqc_files = ch_multiqc_files.mix(SAMTOOLS_DEPTH.out.tsv.collect{it[1]}.ifEmpty([]))
     ch_multiqc_files = ch_multiqc_files.mix(ch_minimap2_mapped.collect{it[1]}.ifEmpty([]))
 
