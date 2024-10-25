@@ -1,20 +1,22 @@
 ## Introduction
 
-**ONT/mpoxseqanalysis** is a bioinformatics pipeline that [in progress]...
-
-<!-- TODO nf-core:
-   Complete this sentence with a 2-3 sentence summary of what types of data the pipeline ingests, a brief overview of the
-   major pipeline sections and the types of output it produces. You're giving an overview to someone new
-   to nf-core here, in 15-20 seconds. For an example, see https://github.com/nf-core/rnaseq/blob/master/README.md#introduction
--->
+**ONT/mpoxseqanalysis** is a pipeline that inputs ONT sequencing data of Mpox isolates and performs a reference-based assembly followed by anvariant table analysis relative to the reference used. It takes a samplesheet and FASTQ files as input, performs quality control (QC), trimming, alignment, nextclade run to identify viral genetic variants, and produces an extensive QC report.
 
 <!-- TODO nf-core: Include a figure that guides the user through the major workflow steps. Many nf-core
      workflows use the "tube map" design for that. See https://nf-co.re/docs/contributing/design_guidelines#examples for examples.   -->
 <!-- TODO nf-core: Fill in short bullet-pointed list of the default steps in the pipeline -->
 
-Will be updated as we go...
+Main steps of the workflow:
+
 1. Read QC ([`FastQC`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/))
-2. Present QC for raw reads ([`MultiQC`](http://multiqc.info/))
+2. Sequencing Toolkit (([`SEQTK`](https://github.com/lh3/seqtk))) Trim to remove primers
+3. Trimming of raw reads to specific length using ([`Trimmomatic`](https://github.com/usadellab/Trimmomatic))
+4. Maps raw reads to reference to generate a refined consensus using ([`Minimap2`](https://github.com/lh3/minimap2)) and ([`IVAR Consensus`](https://andersen-lab.github.io/ivar/html/index.html)) 
+5. ([`Samtools`](https://www.htslib.org/)) to manage alignment files and obtain depth of coverage.
+9. Polish consensus using ([`MEDAKA`](https://github.com/nanoporetech/medaka))
+10. Generate variant table using ([`IVAR Variants`](https://andersen-lab.github.io/ivar/html/index.html))
+11. ([`Nextclade`](https://docs.nextstrain.org/projects/nextclade/en/stable/index.html)) for clade assignment, mutation calling, phylogenetic placement, and quality checks for Mpox (Monkeypox).
+12. Present QC for raw reads ([`MultiQC`](http://multiqc.info/))
 
 ## Usage
 
@@ -57,10 +59,16 @@ Now, you can run the pipeline using:
 nextflow run ONT/mpoxseqanalysis \
    -profile <docker/singularity/.../institute> \
    --input samplesheet.csv \
-   --outdir <OUTDIR>
-   -resume <#if applicable>
+   --outdir <OUTDIR> \
+   -resume <#if applicable> \
+   --fasta <fasta_path> \
+   --bed_file <bed_path> \
+   --fai_file <fai_path> \
+   --gff_file <gff_path> \
+   --mmi_file <mmi_path> \
+   --nextclade_dataset_name 'nextstrain/mpox/all-clades'
 ```
-
+* Reference files for Mpox [NC063383] have been provided im `/assets/NC063383_mpox/`
 > [!WARNING]
 > Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_;
 > see [docs](https://nf-co.re/usage/configuration#custom-configuration-files).
@@ -70,6 +78,10 @@ nextflow run ONT/mpoxseqanalysis \
 ONT/mpoxseqanalysis was originally written by Luis Antonio Haddock.
 
 We thank the following people for their extensive assistance in the development of this pipeline:
+
+1. Crystal Gigante, PhD
+2. Daisy McGrath
+3. ...
 
 <!-- TODO nf-core: If applicable, make list of people who have also contributed -->
 
