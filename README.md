@@ -9,7 +9,7 @@
 Main steps of the workflow:
 
 1. Read QC ([`FastQC`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/))
-2. Sequencing Toolkit (([`SEQTK`](https://github.com/lh3/seqtk))) Trim to remove primers
+2. Sequencing Toolkit ([`SEQTK`](https://github.com/lh3/seqtk)) Trim to remove primers
 3. Trimming of raw reads to specific length using ([`Trimmomatic`](https://github.com/usadellab/Trimmomatic))
 4. Maps raw reads to reference to generate a refined consensus using ([`Minimap2`](https://github.com/lh3/minimap2)) and ([`IVAR Consensus`](https://andersen-lab.github.io/ivar/html/index.html)) 
 5. ([`Samtools`](https://www.htslib.org/)) to manage alignment files and obtain depth of coverage.
