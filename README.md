@@ -69,7 +69,7 @@ nextflow run ONT/mpoxseqanalysis \
    --mmi_file <mmi_path> \
    --nextclade_dataset_name 'nextstrain/mpox/all-clades'
 ```
-_*Reference files for Mpox [NC063383] have been provided im `/assets/NC063383_mpox/`_
+_*Reference files for Mpox [NC063383] have been provided in `/assets/NC063383_mpox/`_
 > [!WARNING]
 > Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_;
 > see [docs](https://nf-co.re/usage/configuration#custom-configuration-files).
