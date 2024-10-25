@@ -8,15 +8,15 @@
 
 Main steps of the workflow:
 
-1. Read QC ([`FastQC`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/))
-2. Sequencing Toolkit ([`SEQTK`](https://github.com/lh3/seqtk)) Trim to remove primers
-3. Trimming of raw reads to specific length using ([`Trimmomatic`](https://github.com/usadellab/Trimmomatic))
-4. Maps raw reads to reference to generate a refined consensus using ([`Minimap2`](https://github.com/lh3/minimap2)) and ([`IVAR Consensus`](https://andersen-lab.github.io/ivar/html/index.html)) 
+1. Read QC ([`FastQC`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)).
+2. Sequencing Toolkit ([`SEQTK`](https://github.com/lh3/seqtk)) Trim to remove primers.
+3. Trimming of raw reads to specific length using ([`Trimmomatic`](https://github.com/usadellab/Trimmomatic)).
+4. Maps raw reads to reference to generate a refined consensus using ([`Minimap2`](https://github.com/lh3/minimap2)) and ([`IVAR Consensus`](https://andersen-lab.github.io/ivar/html/index.html)).
 5. ([`Samtools`](https://www.htslib.org/)) to manage alignment files and obtain depth of coverage.
-9. Polish consensus using ([`MEDAKA`](https://github.com/nanoporetech/medaka))
-10. Generate variant table using ([`IVAR Variants`](https://andersen-lab.github.io/ivar/html/index.html))
+9. Polish consensus using ([`MEDAKA`](https://github.com/nanoporetech/medaka)).
+10. Generate variant table using ([`IVAR Variants`](https://andersen-lab.github.io/ivar/html/index.html)).
 11. ([`Nextclade`](https://docs.nextstrain.org/projects/nextclade/en/stable/index.html)) for clade assignment, mutation calling, phylogenetic placement, and quality checks for Mpox (Monkeypox).
-12. Present QC for raw reads ([`MultiQC`](http://multiqc.info/))
+12. Present QC for raw reads ([`MultiQC`](http://multiqc.info/)).
 
 ## Usage
 
