@@ -53,9 +53,9 @@ A script is provided to convert a directory of fastq files into the required inp
 *Using single end (SE) data for building this workflow
 
 Repository needs to be cloned using `git clone`
-
-`git clone https://git.biotech.cdc.gov/uqo2/mpox_ont_seq_analysis.git`
-
+```
+git clone https://git.biotech.cdc.gov/uqo2/mpox_ont_seq_analysis.git
+```
 Now, you can run the pipeline using:
 
 <!-- TODO nf-core: update the following command to include all required parameters for a minimal example -->
@@ -79,7 +79,7 @@ _*Reference files for Mpox [NC063383] have been provided in `/assets/NC063383_mp
 Nextclade output files can be modified to remove unnecesary columns. To do so, run the filtering script (`assets/nextclade_tsv_column_filter.sh`) inside the `Nextclade` output directory. the resulting TSV file will contain the follwing colums: `'index', 'seqName', 'clade', 'lineage', 'outbreak', 'qc.overallScore', 'qc.overallStatus', 'totalSubstitutions', 'totalDeletions', 'totalInsertions', 'totalFrameShifts', 'totalMissing', 'totalNonACGTNs', 'failedCdses', 'warnings', 'errors'`. Feel free to modify as needed.
 
 > [!WARNING]
-Warning: Note that, for historical reasons, the developers use semicolon (;) as the column separator in CSV files because they have comma (,) as list separators within table cells. In early versions of Nextclade, their CSV writer code was imperfect, making this an easy solution. They recommend using TSV format instead of CSV format. However, if using CSV format, it is important to configure spreadsheet software or parsers to use semicolons (;) as column delimiters.
+Note that, for historical reasons, the developers use semicolon (;) as the column separator in CSV files because they have comma (,) as list separators within table cells. In early versions of Nextclade, their CSV writer code was imperfect, making this an easy solution. They recommend using TSV format instead of CSV format. However, if using CSV format, it is important to configure spreadsheet software or parsers to use semicolons (;) as column delimiters.
 
 For more information visit the [Nextclade CLI](https://docs.nextstrain.org/projects/nextclade/en/stable/index.html) homepage.
 
