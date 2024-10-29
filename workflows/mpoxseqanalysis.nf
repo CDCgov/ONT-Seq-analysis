@@ -70,7 +70,8 @@ include { NEXTCLADE_RUN               } from '../modules/nf-core/nextclade/run/m
 // MODULE: Installed locally mirrored after nf-core/modules
 //
 include { MEDAKAMODULE as MEDAKA      } from '../modules/local/medakamodule'
-//include { CLAIR3                      } from '../modules/local/clair3'
+include { NEXTCLADECOLFILTER          } from '../modules/local/nextcladecolfilter'
+
 
 
 /*
@@ -246,6 +247,8 @@ workflow MPOXSEQANALYSIS {
 
     ch_versions = ch_versions.mix(NEXTCLADE_DATASETGET.out.versions.first())
     ch_versions = ch_versions.mix(NEXTCLADE_RUN.out.versions.first())
+
+
     
     //BCFTOOLS_INDEX (
      //   IVAR_VARIANTS.out.tsv

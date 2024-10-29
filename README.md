@@ -1,6 +1,6 @@
 ## Introduction
 
-**ONT/mpoxseqanalysis** is a pipeline that inputs ONT sequencing data of Mpox isolates and performs a reference-based assembly followed by anvariant table analysis relative to the reference used. It takes a samplesheet and FASTQ files as input, performs quality control (QC), trimming, alignment, nextclade run to identify viral genetic variants, and produces an extensive QC report.
+**ONT/mpoxseqanalysis** is a pipeline that inputs ONT sequencing data of Mpox isolates and performs a reference-based assembly followed by a variant table analysis relative to the reference used. It takes a samplesheet and FASTQ files as input, performs quality control (QC), trimming, alignment, nextclade run to identify viral genetic variants, and produces an extensive QC report.
 
 <!-- TODO nf-core: Include a figure that guides the user through the major workflow steps. Many nf-core
      workflows use the "tube map" design for that. See https://nf-co.re/docs/contributing/design_guidelines#examples for examples.   -->
@@ -11,7 +11,7 @@ Main steps of the workflow:
 1. Read QC ([`FastQC`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)).
 2. Sequencing Toolkit ([`SEQTK`](https://github.com/lh3/seqtk)) Trim to remove primers.
 3. Trimming of raw reads to specific length using ([`Trimmomatic`](https://github.com/usadellab/Trimmomatic)).
-4. Maps raw reads to reference to generate a refined consensus using ([`Minimap2`](https://github.com/lh3/minimap2)) and ([`IVAR Consensus`](https://andersen-lab.github.io/ivar/html/index.html)).
+4. Maps raw reads to reference and generate a refined consensus using ([`Minimap2`](https://github.com/lh3/minimap2)) and ([`IVAR Consensus`](https://andersen-lab.github.io/ivar/html/index.html)).
 5. ([`Samtools`](https://www.htslib.org/)) to manage alignment files and obtain depth of coverage.
 9. Polish consensus using ([`MEDAKA`](https://github.com/nanoporetech/medaka)).
 10. Generate variant table using ([`IVAR Variants`](https://andersen-lab.github.io/ivar/html/index.html)).
