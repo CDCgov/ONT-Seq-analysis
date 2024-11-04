@@ -40,7 +40,7 @@ Each row represents a fastq file (single-end) or a pair of fastq files (paired e
 -->
 
 
-First, prepare a samplesheet with your input data that looks as follows*:
+First, prepare a samplesheet with your input data containing single-end ONT fastq files:
 
 `samplesheet.csv`:
 
@@ -50,7 +50,8 @@ CONTROL_REP1,AEG588A1_S1_L002_R1_001.fastq.gz,
 ```
 A script is provided to convert a directory of fastq files into the required input sheet. Script can be found on `/assets/ont_fastq_concat_and_samplesheet_create.sh`
 
-*Using single end (SE) data for building this workflow
+>[!WARNING]
+Avoid using special characters (parentheses, commas, asterisks, hashes, etc.) in FASTQ file names. Only use letters, numbers, underscores (_), and hyphens (-) for better compatibility with the workflow and to avoid unexpected crashes of the runs.
 
 Repository needs to be cloned using `git clone`
 ```
