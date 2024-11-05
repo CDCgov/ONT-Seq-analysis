@@ -117,18 +117,6 @@ workflow MPOXSEQANALYSIS {
     
 
 
- /*   Channel
-        .fromPath(params.fasta) // Reference file provided via --fasta
-        .set { fasta_alone_ch }
-        
-    Channel
-        .fromPath(params.fasta) // Channel for reference_seq
-        .map { reference_seq ->
-            def meta = [:] // Empty meta, or you could use null if needed
-            tuple(meta, reference_seq) // Add empty meta to the tuple for the reference_seq channel
-        }
-        .set { fasta_ch }
-*/
     Channel
         .fromPath(params.fasta) // Channel for reference_seq
         .map { reference_seq ->
@@ -171,9 +159,27 @@ workflow MPOXSEQANALYSIS {
     // MODULE: Samtools
     //
 
+    // Define the channels with specific file names
+    bam_channel = MINIMAP2_ALIGN.out.bam
+    index_channel = MINIMAP2_ALIGN.out.index
+
+    // Join the bam and index channels on the 'meta' key
+    combined_view_channel = bam_channel.join(index_channel, by: 0)
+
+    /*println "combined_view_channel: ${combined_view_channel == null ? 'null' : 'valid'}"
+    println "DEBUG: Type of combined_view_channel: ${combined_view_channel.getClass()}"
+    combined_view_channel.view()  // Print contents
+*/
+    SAMTOOLS_VIEW (
+        combined_view_channel,
+        [ [], params.fasta ],
+        []
+    )
+
+    //SAMTOOLS_VIEW.out.bam.view()
 
     SAMTOOLS_SORT(
-        MINIMAP2_ALIGN.out.bam,
+        SAMTOOLS_VIEW.out.bam,
         [ [], params.fasta ]
     )
 
@@ -219,9 +225,9 @@ workflow MPOXSEQANALYSIS {
 
     ch_versions = ch_versions.mix(MEDAKA.out.versions.first())
 
-    println "MEDAKA.out.assembly: ${MEDAKA.out.assembly == null ? 'null' : 'valid'}"
-    println "DEBUG: Type of MEDAKA.out.assembly: ${MEDAKA.out.assembly.getClass()}"
-    MEDAKA.out.assembly.view()  // Print contents
+    //println "MEDAKA.out.assembly: ${MEDAKA.out.assembly == null ? 'null' : 'valid'}"
+    //println "DEBUG: Type of MEDAKA.out.assembly: ${MEDAKA.out.assembly.getClass()}"
+    //MEDAKA.out.assembly.view()  // Print contents
 
 
     // 
