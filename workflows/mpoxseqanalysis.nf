@@ -171,6 +171,7 @@ workflow MPOXSEQANALYSIS {
     // MODULE: Samtools
     //
 
+
     SAMTOOLS_SORT(
         MINIMAP2_ALIGN.out.bam,
         [ [], params.fasta ]
