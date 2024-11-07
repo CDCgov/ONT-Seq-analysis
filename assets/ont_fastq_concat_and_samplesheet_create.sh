@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Ensure you currently are in the wd you will save the merged files to. A directory will be created automatically to store all merged files."
+echo "Ensure you currently are in the working directory you will save the merged files to. A directory will be created automatically to store all merged files."
 echo ""
 echo "Warning: Only use letters, numbers, underscores (_), and hyphens (-) for better compatibility with the workflow and to avoid unexpected crashes of the runs. Avoid the use of special characters (parenthesis, asterisks, etc.)"
 
@@ -10,7 +10,7 @@ if [ "$answer" == "n" ]; then
     echo "Running the script now..."
 
     # Prompt the user for the path to the data directory
-    read -p "Please enter the path to the data directory: " data_dir
+    read -p "Please enter the path to the data directory (ending the path with a ("/") symbol): " data_dir
 
     # Step 1: Create a 'data_output' folder in the current working directory
     output_dir="data_output"
@@ -62,8 +62,8 @@ if [ "$answer" == "n" ]; then
         fi
     done
 
-    # Replace hyphens with underscores in only the first column (subdir_name)
-    sed -i 's/^\([^,]*\)-/\1_/g; t; s/^\([^,]*\)-/\1_/g' "$samplesheet"
+    # Replace hyphens and parenthesis with underscores in only the first column (subdir_name)
+    sed -i 's/^\([^,]*\)[-()]/\1_/g; t; s/^\([^,]*\)[-()]/\1_/g' "$samplesheet" 
 
     echo "Samplesheet created: $samplesheet at $(date '+%Y-%m-%d %H:%M:%S')"
 
