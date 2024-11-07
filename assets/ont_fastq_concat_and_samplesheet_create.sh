@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Ensure you currently are in the working directory you will save the merged files to. A directory will be created automatically to store all merged files."
+echo "Ensure you currently are in the working directory you will save the merged files to and the samplesheet file. A directory will be created automatically to store all merged files."
 echo ""
 echo "Warning: Only use letters, numbers, underscores (_), and hyphens (-) for better compatibility with the workflow and to avoid unexpected crashes of the runs. Avoid the use of special characters (parenthesis, asterisks, etc.)"
 

@@ -45,7 +45,7 @@ First, prepare a samplesheet with your input data containing single-end ONT fast
 
 ```csv
 sample,fastq_1,fastq_2
-CONTROL_REP1,AEG588A1_S1_L002_R1_001.fastq.gz,
+SAMPLE_NAME_1,RANDOM_NAME_S1_L002_R1_001.fastq.gz,
 ```
 A script is available to concatenate barcoded FASTQ files in a directory and generate a samplesheet in the required input format. You can find this script in `/assets/ont_fastq_concat_and_samplesheet_create.sh`. Ensure you’re in the working directory where you’d like the merged files and saved, as the script will automatically create a directory to store the, placing the samplesheet file in the same directory. Make sure to enter the path to the directory with the FASTQ files, ending with a "/" symbol.
 

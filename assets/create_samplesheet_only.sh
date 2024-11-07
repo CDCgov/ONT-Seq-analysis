@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Ensure you are in the working directory where you want to save the samplesheet."
+echo "Ensure you are in the working directory where you want to save the samplesheet file."
 
 # Prompt the user for the path to the output directory
 read -p "Please enter the path to the data output directory with contatenated fastq files (ending the path with a ("/") symbol): " output_dir
