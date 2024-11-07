@@ -3,7 +3,7 @@
 echo "Ensure you are in the working directory where you want to save the samplesheet."
 
 # Prompt the user for the path to the output directory
-read -p "Please enter the path to the data output directory with contatenated fastq files (ending the path with a ("/") symbol)  : " output_dir
+read -p "Please enter the path to the data output directory with contatenated fastq files (ending the path with a ("/") symbol): " output_dir
 
 # Step 1: Create samplesheet.csv
 samplesheet="samplesheet.csv"
