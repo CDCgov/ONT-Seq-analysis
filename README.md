@@ -39,7 +39,6 @@ Each row represents a fastq file (single-end) or a pair of fastq files (paired e
 
 -->
 
-
 First, prepare a samplesheet with your input data containing single-end ONT fastq files:
 
 `samplesheet.csv`:

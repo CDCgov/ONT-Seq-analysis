@@ -10,7 +10,7 @@ if [ "$answer" == "n" ]; then
     echo "Running the script now..."
 
     # Prompt the user for the path to the data directory
-    read -p "Please enter the path to the data directory (ending the path with a ("/") symbol): " data_dir
+    read -p "Please enter the path to the data directory (ending the path with a ("/") symbol):  " data_dir
 
     # Step 1: Create a 'data_output' folder in the current working directory
     output_dir="data_output"
