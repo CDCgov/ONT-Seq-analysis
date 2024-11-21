@@ -14,7 +14,7 @@ Main steps of the workflow:
 4. Maps raw reads to reference and generate a refined consensus using ([`Minimap2`](https://github.com/lh3/minimap2)) and ([`IVAR Consensus`](https://andersen-lab.github.io/ivar/html/index.html)).
 5. ([`Samtools`](https://www.htslib.org/)) to manage alignment files and obtain depth of coverage.
 9. Polish consensus using ([`MEDAKA`](https://github.com/nanoporetech/medaka)).
-10. Generate variant table using ([`IVAR Variants`](https://andersen-lab.github.io/ivar/html/index.html)).
+10. Generate a variant table using ([`IVAR Variants`](https://andersen-lab.github.io/ivar/html/index.html)).
 11. ([`Nextclade`](https://docs.nextstrain.org/projects/nextclade/en/stable/index.html)) for clade assignment, mutation calling, phylogenetic placement, and quality checks for Mpox (Monkeypox).
 12. Present QC for raw reads ([`MultiQC`](http://multiqc.info/)).
 
@@ -47,7 +47,7 @@ First, prepare a samplesheet with your input data containing single-end ONT fast
 sample,fastq_1,fastq_2
 SAMPLE_NAME_1,RANDOM_NAME_S1_L002_R1_001.fastq.gz,
 ```
-A script is available to concatenate barcoded FASTQ files in a directory and generate a samplesheet in the required input format. You can find this script in `/assets/ont_fastq_concat_and_samplesheet_create.sh`. Ensure you’re in the working directory where you’d like the merged files and saved, as the script will automatically create a directory to store the, placing the samplesheet file in the same directory. Make sure to enter the path to the directory with the FASTQ files, ending with a "/" symbol.
+A script is available to concatenate barcoded FASTQ files in a directory and generate a samplesheet in the required input format. You can find this script in `/assets/ont_fastq_concat_and_samplesheet_create.sh`. Ensure you’re in the working directory where you’d like the merged files and saved, as the script will automatically create a directory to store the resulting files, placing the samplesheet file in the same directory. Make sure to enter the path to the directory with the FASTQ files, ending with a "/" symbol.
 
 If your FASTQ files are already concatenated by barcode, you can generate only the samplesheet by running `/assets/create_samplesheet_only.sh`. Enter the path to the directory with concatenated FASTQ files, ending with a "/", and ensure you are in the working directory where you want to save the samplesheet.
 
@@ -78,15 +78,24 @@ nextflow run mpox_ont_seq_analysis \
 _*Reference files for Mpox [NC063383] have been provided in `/assets/NC063383_mpox/`_
 
 
-Nextclade output files can be modified to remove unnecesary columns. To do so, run the filtering script (`assets/nextclade_tsv_column_filter.sh`) inside the `Nextclade` output directory. the resulting TSV file will contain the follwing colums: `'index', 'seqName', 'clade', 'lineage', 'outbreak', 'qc.overallScore', 'qc.overallStatus', 'totalSubstitutions', 'totalDeletions', 'totalInsertions', 'totalFrameShifts', 'totalMissing', 'totalNonACGTNs', 'failedCdses', 'warnings', 'errors'`. Feel free to modify as needed.
+Nextclade output files can be modified to remove unnecesary columns. To do so, run the filtering script (`assets/nextclade_tsv_column_filter.sh`) inside the `Nextclade` output directory. The resulting TSV file will contain the following colums: `'index', 'seqName', 'clade', 'lineage', 'outbreak', 'qc.overallScore', 'qc.overallStatus', 'totalSubstitutions', 'totalDeletions', 'totalInsertions', 'totalFrameShifts', 'totalMissing', 'totalNonACGTNs', 'failedCdses', 'warnings', 'errors'`. Feel free to modify as needed.
 
 > [!WARNING]
 Note that, for historical reasons, the developers use semicolon (;) as the column separator in CSV files because they have comma (,) as list separators within table cells. In early versions of Nextclade, their CSV writer code was imperfect, making this an easy solution. They recommend using TSV format instead of CSV format. However, if using CSV format, it is important to configure spreadsheet software or parsers to use semicolons (;) as column delimiters.
 
+We have also included a python script to extract mutations from each nextclade output file and for each specimen, returning a table highlighting key mutations that could indicate a designation of Clade I or Clade II, including the different lineages. Run the python script (`assets/pythonX_nextclade_parser.py`) inside the `Nextclade` output directory. It will generate a directory named `parser` that will contain a tsv file for each specimen with the following format:
+
+| seq_name | Mutations_found_on_sequence | Found_in_Clade_I_or_Clade_II | Clade_designation |
+|----------|-----------------------------|------------------------------|--------------------|
+| sample1  | G01234A                    | yes                          | Clade Ia          |
+| sample1  | G56789A                    | yes                          | Clade IIb         |
+
+
+
 For more information visit the [Nextclade CLI](https://docs.nextstrain.org/projects/nextclade/en/stable/index.html) homepage.
 
 > [!WARNING]
-> Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_;
+> Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_:
 > see [docs](https://nf-co.re/usage/configuration#custom-configuration-files).
 
 ## Credits
