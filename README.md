@@ -1,3 +1,14 @@
+**General disclaimer** This repository was created for use by CDC programs to collaborate on public health related projects in support of the [CDC mission](https://www.cdc.gov/about/organization/mission.htm).  GitHub is not hosted by the CDC, but is a third party website used by CDC and its partners to share information and collaborate on software. CDC use of GitHub does not imply an endorsement of any one particular service, product, or enterprise. 
+
+## Privacy Standard Notice
+This repository contains only non-sensitive, publicly available data and
+information. All material and community participation is covered by the
+[Disclaimer](DISCLAIMER.md)
+and [Code of Conduct](code-of-conduct.md).
+For more information about CDC's privacy policy, please visit [http://www.cdc.gov/other/privacy.html](https://www.cdc.gov/other/privacy.html).
+
+Full disclaimer can be found at the end of this markdown file.
+
 ## Introduction
 
 **ONT/mpoxseqanalysis** is a pipeline that inputs ONT sequencing data of Mpox isolates and performs a reference-based assembly followed by a variant table analysis relative to the reference used. It takes a samplesheet and FASTQ files as input, performs quality control (QC), trimming, alignment, nextclade run to identify viral genetic variants, and produces an extensive QC report.
