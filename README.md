@@ -100,12 +100,13 @@ For more information visit the [Nextclade CLI](https://docs.nextstrain.org/proje
 
 ## Credits
 
-ONT/mpoxseqanalysis was originally written by Luis Antonio Haddock.
+ONT/mpoxseqanalysis was originally written by Luis Antonio Haddock, PhD (CDC).
 
 We thank the following people for their extensive assistance in the development of this pipeline:
 
-1. Crystal Gigante, PhD
-2. Daisy McGrath
+1. Crystal Gigante, PhD (CDC)
+2. Daisy McGrath (CDC)
+3. Christopher Gulvik, PhD (CDC)
 
 <!-- TODO nf-core: If applicable, make list of people who have also contributed -->
 
