@@ -47,7 +47,7 @@ First, prepare a samplesheet with your input data containing single-end ONT fast
 sample,fastq_1,fastq_2
 SAMPLE_NAME_1,RANDOM_NAME_S1_L002_R1_001.fastq.gz,
 ```
-A script is available to concatenate barcoded FASTQ files in a directory and generate a samplesheet in the required input format. You can find this script in `/assets/ont_fastq_concat_and_samplesheet_create.sh`. Ensure you’re in the working directory where you’d like the merged files and saved, as the script will automatically create a directory to store the resulting files, placing the samplesheet file in the same directory. Make sure to enter the path to the directory with the FASTQ files, ending with a "/" symbol.
+A script is available to concatenate barcoded FASTQ files in a directory and generate a samplesheet in the required input format. You can find this script in `/assets/ont_fastq_concat_and_samplesheet_create.sh`. Ensure you’re in the working directory where you’d like the files merged and saved, as the script will automatically create a directory to store the resulting files, placing the samplesheet file in the same directory. Make sure to enter the path to the directory with the FASTQ files, ending with a "/" symbol.
 
 If your FASTQ files are already concatenated by barcode, you can generate only the samplesheet by running `/assets/create_samplesheet_only.sh`. Enter the path to the directory with concatenated FASTQ files, ending with a "/", and ensure you are in the working directory where you want to save the samplesheet.
 
@@ -56,7 +56,7 @@ Avoid using special characters (parentheses, commas, asterisks, hashes, etc.) in
 
 Repository needs to be cloned using `git clone`
 ```
-git clone https://git.biotech.cdc.gov/uqo2/mpox_ont_seq_analysis.git
+git clone https://github.com/CDCgov/ONT-Seq-analysis
 ```
 Now, you can run the pipeline using:
 
