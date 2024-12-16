@@ -38,7 +38,7 @@
 
   > Oxford Nanopore Technologies. Medaka: Sequence correction provided by ONT. Available at: https://github.com/nanoporetech/medaka
 
-- [Nextclade](https://docs.nextstrain.org/projects/nextclade/en/stable/user/nextclade-cli/index.html)([Github](https://github.com/nextstrain/nextclade))
+- [Nextclade](https://docs.nextstrain.org/projects/nextclade/en/stable/user/nextclade-cli/index.html) - ([Github](https://github.com/nextstrain/nextclade))
 
   > Aksamentov, I., Roemer, C., Hodcroft, E. B., & Neher, R. A. (2021). Nextclade: clade assignment, mutation calling, and quality control for viral genomes. Journal of Open Source Software, 6(67), 3773. https://doi.org/10.21105/joss.03773
 
