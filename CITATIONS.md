@@ -14,6 +14,34 @@
 
   > Andrews, S. (2010). FastQC: A Quality Control Tool for High Throughput Sequence Data [Online].
 
+- [Seqtk](https://github.com/lh3/seqtk)
+
+  > Heng Li. Seqtk: a fast and lightweight tool for processing sequences in the FASTA or FASTQ format. Available at: https://github.com/lh3/seqtk
+
+- [Trimmomatic](https://github.com/usadellab/Trimmomatic)
+
+  > Bolger, A. M., Lohse, M., & Usadel, B. (2014). Trimmomatic: a flexible trimmer for Illumina sequence data. Bioinformatics, 30(15), 2114–2120. https://doi.org/10.1093/bioinformatics/btu170
+
+- [iVar](https://github.com/andersen-lab/ivar)
+
+  > Grubaugh, N. D., Gangavarapu, K., Quick, J., Matteson, N. L., De Jesus, J. G., Main, B. J., ... & Andersen, K. G. (2019). An amplicon-based sequencing framework for accurately measuring intrahost virus diversity using PrimalSeq and iVar. Genome Biology, 20(1), 8. https://doi.org/10.1186/s13059-018-1618-7
+
+- [Minimap2](https://github.com/lh3/minimap2)
+
+  > Heng, Li. (2018). Minimap2: pairwise alignment for nucleotide sequences. Bioinformatics, 34(18), 3094–3100. https://doi.org/10.1093/bioinformatics/bty191
+
+- [Samtools](https://github.com/samtools/samtools)
+
+  > Danecek, P., Bonfield, J. K., Liddle, J., Marshall, J., Ohan, V., Pollard, M. O., ... & Li, H. (2021). Twelve years of SAMtools and BCFtools. GigaScience, 10(2), giab008. https://doi.org/10.1093/gigascience/giab008
+
+- [Medaka](https://github.com/nanoporetech/medaka)
+
+  > Oxford Nanopore Technologies. Medaka: Sequence correction provided by ONT. Available at: https://github.com/nanoporetech/medaka
+
+- [Nextclade](https://github.com/nextstrain/nextclade)
+
+  > Aksamentov, I., Roemer, C., Hodcroft, E. B., & Neher, R. A. (2021). Nextclade: clade assignment, mutation calling, and quality control for viral genomes. Journal of Open Source Software, 6(67), 3773. https://doi.org/10.21105/joss.03773
+
 - [MultiQC](https://pubmed.ncbi.nlm.nih.gov/27312411/)
 
   > Ewels P, Magnusson M, Lundin S, Käller M. MultiQC: summarize analysis results for multiple tools and samples in a single report. Bioinformatics. 2016 Oct 1;32(19):3047-8. doi: 10.1093/bioinformatics/btw354. Epub 2016 Jun 16. PubMed PMID: 27312411; PubMed Central PMCID: PMC5039924.
