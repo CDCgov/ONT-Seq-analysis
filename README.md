@@ -20,6 +20,10 @@ Full disclaimer can be found at the end of this markdown file.
 
 ## Introduction
 
+![ONT-Seq-analysis metro map](docs/images/metro_ont_workflow.png)
+
+_Schematic of the main steps in the workflow_
+
 **ONT-Seq-analysis** is a pipeline that inputs ONT sequencing data of Mpox isolates and performs a reference-based assembly followed by a variant table analysis relative to the reference used. It takes a samplesheet and FASTQ files as input, performs quality control (QC), trimming, alignment, nextclade run to identify viral genetic variants, and produces an extensive QC report.
 
 <!-- TODO nf-core: Include a figure that guides the user through the major workflow steps. Many nf-core
