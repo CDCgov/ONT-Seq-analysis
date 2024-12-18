@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Ensure you currently are in the working directory you will save the merged files to and the samplesheet file. A directory will be created automatically to store all merged files."
+echo "Ensure you are in the working directory you will save the merged files to and the samplesheet file. A directory will be created automatically to store all merged files."
 echo ""
 echo "Warning: Only use letters, numbers, underscores (_), and hyphens (-) for better compatibility with the workflow and to avoid unexpected crashes of the runs. Avoid the use of special characters (parenthesis, asterisks, etc.)"
 
@@ -9,7 +9,7 @@ read -p "Does your data contain any special characters? (y/n): " answer
 if [ "$answer" == "n" ]; then
     echo "Running the script now..."
 
-    # Prompt the user for the path to the data directory
+    # Ask the user for the path to the data directory
     read -p "Please enter the path to the data directory (ending the path with a ("/") symbol): " data_dir
 
     # Step 1: Create a 'data_output' folder in the current working directory
