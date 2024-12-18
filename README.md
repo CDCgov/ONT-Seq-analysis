@@ -7,7 +7,7 @@ information. All material and community participation is covered by the
 and [Code of Conduct](code-of-conduct.md).
 For more information about CDC's privacy policy, please visit [http://www.cdc.gov/other/privacy.html](https://www.cdc.gov/other/privacy.html).
 
-Full disclaimer can be found at the end of this markdown file.
+Full disclaimer can be found at the end of this file.
 
 
 [![Nextflow](https://img.shields.io/badge/nextflow%20DSL2-%E2%89%A523.04.0-23aa62.svg)](https://www.nextflow.io/)
@@ -136,7 +136,7 @@ This pipeline uses code and infrastructure developed and maintained by the [nf-c
 
 # CDCgov GitHub Organization Open Source Project 
 
-**General disclaimer** This repository was created for use by CDC programs to collaborate on public health related projects in support of the [CDC mission](https://www.cdc.gov/about/divisions-offices/index.html).  GitHub is not hosted by the CDC, but is a third party website used by CDC and its partners to share information and collaborate on software. CDC use of GitHub does not imply an endorsement of any one particular service, product, or enterprise. 
+**General disclaimer** This repository was created for use by CDC programs to collaborate on public health related projects in support of the [CDC mission](https://www.cdc.gov/about/divisions-offices/index.html). GitHub is not hosted by the CDC, but is a third party website used by CDC and its partners to share information and collaborate on software. CDC use of GitHub does not imply an endorsement of any one particular service, product, or enterprise. 
 
 ## Access Request, Repo Creation Request
 
@@ -154,7 +154,7 @@ This pipeline uses code and infrastructure developed and maintained by the [nf-c
 ## Overview
 
 Describe the purpose of your project. Add additional sections as necessary to help collaborators and potential collaborators understand and use your project.
-  
+ 
 ## Public Domain Standard Notice
 This repository constitutes a work of the United States Government and is not
 subject to domestic copyright protection under 17 USC § 105. This repository is in
