@@ -20,7 +20,7 @@ Full disclaimer can be found at the end of this file.
 
 ## Introduction
 
-![ONT-Seq-analysis metro map](docs/images/metro_ont_workflow.png)
+![ONT-Seq-analysis metro map](docs/images/ONT_workflow.png)
 
 _Schematic of the main steps in the workflow_
 
