@@ -274,5 +274,11 @@
         {
             "$ref": "#/definitions/nextclade_parameters"
         }
-    ]
+    ],
+    "properties": {
+        "run_ivar_variants": {
+            "type": "boolean",
+            "description": "Option to toggle the Ivar variants module"
+        }
+    }
 }

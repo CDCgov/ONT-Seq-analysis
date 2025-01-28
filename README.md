@@ -83,6 +83,7 @@ nextflow run mpox_ont_seq_analysis \
 ```
 _*Reference files for Mpox [NC063383] have been provided in `/assets/NC063383_mpox/`_
 
+The module `Ivar_Variants` is turned off by default. To include it on the run, simply add `--run_ivar_variants true` to the nextflow run command (shown above). 
 
 Nextclade output files can be modified to remove unnecesary columns. To do so, run the filtering script (`assets/nextclade_tsv_column_filter.sh`) inside the `Nextclade` output directory. The resulting TSV file will contain the following colums: `'index', 'seqName', 'clade', 'lineage', 'outbreak', 'qc.overallScore', 'qc.overallStatus', 'totalSubstitutions', 'totalDeletions', 'totalInsertions', 'totalFrameShifts', 'totalMissing', 'totalNonACGTNs', 'failedCdses', 'warnings', 'errors'`. Feel free to modify as needed.
 

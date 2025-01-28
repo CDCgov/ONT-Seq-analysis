@@ -234,13 +234,16 @@ workflow MPOXSEQANALYSIS {
     // MODULE: IVAR_VARIANTS & BCFTOOLS_INDEX (for indexing VCF file)
     //
 
-    IVAR_VARIANTS (
-        SAMTOOLS_SORT.out.bam,
-        params.fasta,
-        params.fai_file,
-        params.gff_file,
-        false
-    )
+    if (params.run_ivar_variants) {
+        IVAR_VARIANTS (
+            SAMTOOLS_SORT.out.bam,
+            params.fasta,
+            params.fai_file,
+            params.gff_file,
+            false
+        )
+    
+    }
 
     NEXTCLADE_DATASETGET (
         params.nextclade_dataset_name,
