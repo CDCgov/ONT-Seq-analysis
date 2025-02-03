@@ -154,7 +154,7 @@ This pipeline uses code and infrastructure developed and maintained by the [nf-c
 
 ## Overview
 
-Describe the purpose of your project. Add additional sections as necessary to help collaborators and potential collaborators understand and use your project.
+This NextFlow pipeline was designed to generate and analyze consensus sequences of two targetted amplicon regions. Each region correlates to primers designed to differentiate mpox clade designations. This analysis gives an alternate to whole genome sequencing while maintaining a high level of confidence to efficient clade assignment. 
  
 ## Public Domain Standard Notice
 This repository constitutes a work of the United States Government and is not
