@@ -218,12 +218,14 @@ workflow MPOXSEQANALYSIS {
     //
    
 
-    MEDAKA (
+    if (params.run_medaka) {
+        MEDAKA (
         TRIMMOMATIC.out.trimmed_reads,
         IVAR_CONSENSUS.out.fasta
     )
+    }
 
-    ch_versions = ch_versions.mix(MEDAKA.out.versions.first())
+    //ch_versions = ch_versions.mix(MEDAKA.out.versions.first())
 
     //println "MEDAKA.out.assembly: ${MEDAKA.out.assembly == null ? 'null' : 'valid'}"
     //println "DEBUG: Type of MEDAKA.out.assembly: ${MEDAKA.out.assembly.getClass()}"
@@ -251,7 +253,7 @@ workflow MPOXSEQANALYSIS {
     )
 
     NEXTCLADE_RUN (
-        MEDAKA.out.assembly,
+        IVAR_CONSENSUS.out.fasta,
         NEXTCLADE_DATASETGET.out.dataset
     )
 
