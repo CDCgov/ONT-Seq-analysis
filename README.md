@@ -61,6 +61,9 @@ If your FASTQ files are already concatenated by barcode, you can generate only t
 >[!WARNING]
 Avoid using special characters (parentheses, commas, asterisks, hashes, etc.) in FASTQ file names. Only use letters, numbers, underscores (_), and hyphens (-) for better compatibility with the workflow and to avoid unexpected crashes of the runs.
 
+> [!NOTE]
+> If you are starting with raw Oxford Nanopore fast5 data, you can use the optional bash script `/assets/repository/dorado_pipeline.sh` to perform basecalling and demultiplexing. This script will convert fast5 files to pod5, basecall them with Dorado (utilizing GPU acceleration), demultiplex barcoded reads, and generate pseudo-paired-end FASTQ files. The output FASTQ files from this script can then be used as input for the samplesheet.csv required by this Nextflow pipeline. If you use this method, you will need to edit the bash script prior to running it with input and output directories as appropriate. Once this is completed, you can generate a samplesheet as described above. 
+
 Repository needs to be cloned using `git clone`
 ```
 git clone https://github.com/CDCgov/ONT-Seq-analysis
